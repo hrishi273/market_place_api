@@ -4,7 +4,10 @@ describe Api::V1::UsersController do
   include Devise::TestHelpers
   include Warden::Test::Helpers
 
-  before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
+  before(:each) do
+    { request.headers['Accept'] = "application/vnd.marketplace.v1, #{Mime::JSON}" }
+    { request.headers['Content-Type'] = Mime::JSON.to_s }
+  end
 
   describe "GET #show" do
     before(:each) do
