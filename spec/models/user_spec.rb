@@ -12,6 +12,10 @@ describe User do
 
   it { should validate_uniqueness_of(:auth_token)}
 
+  it { should be_valid }
+  it { should have_many(:products) }
+  it { should have_many(:orders) }
+
   describe "#generate_authentication_token!" do
     it "generates a unique token" do
       Devise.stub(:friendly_token).and_return("auniquetoken123")
@@ -25,9 +29,6 @@ describe User do
       expect(@user.auth_token).not_to eql existing_user.auth_token
     end
   end
-
-  it { should be_valid }
-  it { should have_many(:products) }
 
   describe "#products association" do
 
