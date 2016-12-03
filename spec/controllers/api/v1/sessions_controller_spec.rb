@@ -42,7 +42,7 @@ describe Api::V1::SessionsController do
 
     before(:each) do
       @user = FactoryGirl.create :user
-      sign_in @user, store: false
+      sign_in @user
       delete :destroy, id: @user.auth_token
     end
 

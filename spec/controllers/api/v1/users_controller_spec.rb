@@ -5,8 +5,8 @@ describe Api::V1::UsersController do
   include Warden::Test::Helpers
 
   before(:each) do
-    { request.headers['Accept'] = "application/vnd.marketplace.v1, #{Mime::JSON}" }
-    { request.headers['Content-Type'] = Mime::JSON.to_s }
+    request.headers['Accept'] = "application/vnd.marketplace.v1, #{Mime::JSON}"
+    request.headers['Content-Type'] = Mime::JSON.to_s
   end
 
   describe "GET #show" do
@@ -62,6 +62,10 @@ describe Api::V1::UsersController do
   end
 
   describe "PUT/PATCH #update" do
+    before(:each) do
+      @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
+    end
 
     context "when is successfully updated" do
       before(:each) do
@@ -102,6 +106,7 @@ describe Api::V1::UsersController do
   describe "DELETE #destroy" do
     before(:each) do
       @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
       delete :destroy, { id: @user.id }, format: :json
     end
 
